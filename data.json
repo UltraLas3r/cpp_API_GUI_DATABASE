@@ -1,0 +1,71 @@
+
+C++ GUI App with SQLite and API Integration – Project Overview
+==============================================================
+
+✅ Core Features
+---------------
+- GUI with multiple pages (login, home, etc.)
+- SQLite database for persistent user/data storage
+- API requests (e.g., RESTful HTTP)
+- Clean C++ code structure (possibly with OOP and design patterns)
+
+🔧 Key Tools & Libraries
+------------------------
+| Feature          | Tool/Library                  | Notes |
+|------------------|-------------------------------|-------|
+| GUI              | Qt / Dear ImGui               | Qt is the most fully-featured and beginner-friendly for GUI apps in C++. |
+| Database         | SQLite3                       | Use the C API directly or a C++ wrapper like SQLiteCpp. |
+| HTTP/API         | cURL / Boost.Beast / cpp-httplib | Use libcurl for REST APIs, or lightweight cpp-httplib for simpler integration. |
+| JSON parsing     | nlohmann/json                 | Popular C++ JSON library, integrates well with API responses. |
+
+🏗️ High-Level Architecture
+--------------------------
+[User Interface - Qt
+]
+    |
+    --> LoginScreen → AuthManager (validates via DB or API)
+    --> HomeScreen
+        --> APIClient (fetches external data)
+        --> SQLiteManager (loads/saves user settings, history, etc.)
+        --> NavigationManager (switches views)
+
+📦 Suggested Folder Structure
+-----------------------------
+/YourApp
+├── /src
+│   ├── main.cpp
+│   ├── App.cpp / App.h           ← Qt main window and view controller
+│   ├── LoginPage.cpp / .h
+│   ├── HomePage.cpp / .h
+│   ├── APIClient.cpp / .h        ← Handles API requests
+│   ├── SQLiteManager.cpp / .h    ← Handles DB connection/queries
+│   └── User.cpp / .h             ← User class (optional)
+├── /resources
+│   └── ui files, icons, etc.
+├── /db
+│   └── schema.sql, app.db
+├── /lib
+│   └── (optional third-party libs like SQLiteCpp, nlohmann/json)
+└── CMakeLists.txt or .pro file
+
+💡 Key Implementation Tips
+--------------------------
+- GUI Navigation: In Qt, use QStackedWidget to handle multiple screens.
+- Database Connection: Open the SQLite DB once on app startup and pass a shared DB object to managers.
+- API Requests: Wrap cURL or cpp-httplib in an APIClient class with methods like getUserData(), fetchWeather(), etc.
+- Separation of Concerns: Keep GUI logic separate from data logic (MVC pattern helps here).
+
+🚀 Optional Enhancements
+------------------------
+- Use design patterns:
+  - Singleton: For DB or API client
+  - Observer: For state changes (e.g., user login/logout)
+  - Command: For undo/redo (if your app gets complex)
+- Add unit tests with Catch2 or Google Test.
+- Add settings/preferences page.
+
+🛠️ Example Toolchain
+---------------------
+- Compiler: g++ / clang++
+- Build System: CMake or Qt Creator
+- OS: Cross-platform (Windows/Linux/macOS)
